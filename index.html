@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consulta de Humedad</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #map {
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Consulta de Humedad</h1>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div id="map"></div>
+            </div>
+            <div class="col-md-6">
+                <h3>Humedad Actual</h3>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Ciudad</th>
+                                <th>Humedad</th>
+                            </tr>
+                        </thead>
+                        <tbody id="humidityTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAWhZkVlxwb4jKte_OGbuCBdpESLu8U1M&callback=initMap" async defer></script>
+    <script>
+        var map;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 25.7617, lng: -80.1918},
+                zoom: 8
+            });
+
+            var markers = [
+                {city: 'Miami', lat: 25.7617, lng: -80.1918},
+                {city: 'Orlando', lat: 28.5383, lng: -81.3792},
+                {city: 'New York', lat: 40.7128, lng: -74.0060}
+            ];
+
+            for (var i = 0; i < markers.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: {lat: markers[i].lat, lng: markers[i].lng},
+                    map: map,
+                    title: markers[i].city
+                });
+
+                marker.addListener('click', function() {
+                    var city = this.getTitle();
+                    getHumidity(city, function(humidity) {
+                        var humidityRow = '<tr><td>' + city + '</td><td>' + humidity + '</td></tr>';
+                        document.getElementById('humidityTable').innerHTML = humidityRow;
+                    });
+                });
+            }
+        }
+
+        function getHumidity(city, callback) {
+            // Aquí va tu código para obtener la humedad de la ciudad
+            // Puedes usar la API de OpenWeatherMap u otro servicio de tu elección
+            // Llama a la función de callback con el valor de la humedad
+            // Ejemplo:
+            var humidity = '50%';
+            callback(humidity);
+        }
+    </script>
+</body>
+</html>
