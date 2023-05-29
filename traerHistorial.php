@@ -1,5 +1,5 @@
 <?php
-// Establecer la conexión a la base de datos (reemplaza con tus propias configuraciones)
+
 $host = 'localhost';
 $db = 'prueba';
 $user = 'root';
